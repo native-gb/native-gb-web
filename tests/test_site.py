@@ -24,7 +24,7 @@ class SiteTest(unittest.TestCase):
         self.assertTrue(games["sml-modern"]["browser"]["ready"])
         self.assertEqual(games["sml-modern"]["browser"]["module"], "play/sml/runtime.js")
         self.assertTrue(games["sml-modern"]["source_url"].endswith(
-            "/tree/d94d5e7f836ec4037e820fd9b5df88f8b5d52813"))
+            "/tree/47d3b0898d549c624e8b28104e729b328c9a798b"))
 
     def test_catalog_assets_and_play_route_exist(self):
         catalog = json.loads((SITE / "catalog.json").read_text())

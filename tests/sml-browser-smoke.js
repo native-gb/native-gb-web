@@ -54,8 +54,11 @@ try {
   await page.waitForFunction(() => globalThis.__nativeGbTest?.snapshot().presented > 0);
   let state = await page.evaluate(() => globalThis.__nativeGbTest.snapshot());
   assert(state.interpolation, "SML Modern did not default to interpolation");
-  assert.equal(state.renderRate, 60);
+  assert.equal(state.renderRate, 240);
   assert.equal(state.behavior, 1, "SML Modern did not default to enhanced behavior");
+  assert.equal(state.worldPolicy, 1, "SML Modern did not default to persistent world actors");
+  assert.equal(state.zoom, 5, "SML Modern did not start at the clean 5x zoom");
+  assert(state.overlaysVisible, "SML Modern did not leave selected overlays available");
   assert(state.browserManagedVsync);
   assert(requestedPaths.some((path) => path.endsWith("/runtime/sml/manifest.json")));
   assert(requestedPaths.some((path) => /\/runtime\/sml\/.*\.wasm$/.test(path)));
@@ -77,6 +80,37 @@ try {
   const tools = await canvas.screenshot();
   assert.notEqual(digest(first), digest(tools), "F1 did not open Modern ImGui tools");
   assert.notEqual((await page.evaluate(() => globalThis.__nativeGbTest.snapshot())).uiState, 0);
+
+  // Exercise the SDL/ImGui pointer path, not merely keyboard visibility. This
+  // checkbox has a stable position in the deployed 1280-wide workspace.
+  const beforeInterpolationClick = await page.evaluate(
+    () => globalThis.__nativeGbTest.snapshot().interpolation);
+  await canvas.click({ position: { x: 377, y: 487 } });
+  await page.waitForFunction(
+    (before) => globalThis.__nativeGbTest.snapshot().interpolation !== before,
+    beforeInterpolationClick);
+
+  const zoomBeforeToolsWheel = await page.evaluate(() => globalThis.__nativeGbTest.snapshot().zoom);
+  await canvas.hover({ position: { x: 500, y: 400 } });
+  await page.mouse.wheel(0, -240);
+  await page.waitForTimeout(100);
+  assert.equal((await page.evaluate(() => globalThis.__nativeGbTest.snapshot())).zoom,
+               zoomBeforeToolsWheel, "F1 wheel input leaked through to gameplay zoom");
+
+  // A 240 Hz browser callback stream with interpolation disabled presents at
+  // 60 Hz. Skipped callbacks must not begin and abandon ImGui frames: the
+  // already-open workspace remains stable and editable afterward.
+  await page.evaluate(() => {
+    const test = globalThis.__nativeGbTest;
+    test.setAutomaticFrames(false);
+    test.setPresentation(0, false, 240);
+    test.advanceFrames(120, 1 / 240);
+    test.setAutomaticFrames(true);
+  });
+  assert.equal((await page.evaluate(() => globalThis.__nativeGbTest.snapshot())).uiState & 1, 1);
+  await canvas.click({ position: { x: 377, y: 487 } });
+  await page.waitForFunction(() => globalThis.__nativeGbTest.snapshot().interpolation);
+
   await page.keyboard.down("F1");
   await page.waitForTimeout(100);
   await page.keyboard.up("F1");
@@ -86,9 +120,26 @@ try {
   await page.waitForTimeout(200);
   assert.notEqual((await page.evaluate(() => globalThis.__nativeGbTest.snapshot())).uiState, 0,
                   "F2 did not open the Modern tester workspace");
+
+  // Pause simulation through the tester workspace and prove the button—not
+  // just F2—reaches ImGui. Allow one already-queued tick before comparing.
+  await canvas.click({ position: { x: 360, y: 73 } });
+  await page.waitForTimeout(100);
+  const pausedAt = await page.evaluate(() => globalThis.__nativeGbTest.snapshot().stepped);
+  await page.waitForTimeout(150);
+  assert.equal((await page.evaluate(() => globalThis.__nativeGbTest.snapshot())).stepped, pausedAt,
+               "F2 pause control did not receive the browser click");
+  await canvas.click({ position: { x: 360, y: 73 } });
+  await page.waitForFunction(
+    (paused) => globalThis.__nativeGbTest.snapshot().stepped > paused, pausedAt);
   await page.keyboard.down("F2");
   await page.waitForTimeout(100);
   await page.keyboard.up("F2");
+
+  await page.keyboard.press("F3");
+  await page.waitForFunction(() => !globalThis.__nativeGbTest.snapshot().overlaysVisible);
+  await page.keyboard.press("F3");
+  await page.waitForFunction(() => globalThis.__nativeGbTest.snapshot().overlaysVisible);
 
   const pacing = await page.evaluate(() => {
     const test = globalThis.__nativeGbTest;
@@ -172,6 +223,11 @@ try {
     await page.waitForTimeout(200);
     const box = await page.locator("#runtime-frame").boundingBox();
     assert(Math.abs(box.width / box.height - 16 / 9) < 0.01);
+    const canvasSize = await page.locator("#game-canvas").evaluate((canvas) => ({
+      width: canvas.width,
+      height: canvas.height,
+    }));
+    assert.deepEqual(canvasSize, { width: Math.round(box.width), height: Math.round(box.height) });
   }
   if (await page.locator("#enable-audio").isVisible())
     await page.locator("#enable-audio").click();

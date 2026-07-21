@@ -57,7 +57,7 @@ button, input { font: inherit; }
   aspect-ratio: 16 / 9;
   overflow: hidden;
   place-items: center;
-  border: 1px solid var(--line);
+  outline: 1px solid var(--line);
   background: #09120d;
   box-shadow: 18px 18px 0 rgb(0 0 0 / 26%);
 }
@@ -70,7 +70,7 @@ button, input { font: inherit; }
   height: 100% !important;
   image-rendering: pixelated;
 }
-.runtime-frame:fullscreen { width: 100vw; height: 100vh; aspect-ratio: auto; border: 0; }
+.runtime-frame:fullscreen { width: 100vw; height: 100vh; aspect-ratio: auto; outline: 0; }
 .runtime-frame[data-loading="true"] #game-canvas,
 .runtime-frame[data-running="true"] #game-canvas { display: block; }
 .runtime-frame[data-loading="true"] .rom-panel,

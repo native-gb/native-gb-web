@@ -30,13 +30,13 @@
     },
     {
       "id": "sml-modern",
-      "title": "Super Mario Land Modern",
+      "title": "Super Mario Land",
       "system": "Game Boy",
       "revision": "World revision A",
       "description": "A clean native C++ implementation with cartridge-decoded presentation, widescreen world views, persistent expanded encounters, modern camera options, controller support, and developer tools.",
       "image": "assets/sml-modern-card.svg",
       "play_url": "play/sml/",
-      "source_url": "https://github.com/native-gb/super-mario-land-modern/tree/d94d5e7f836ec4037e820fd9b5df88f8b5d52813",
+      "source_url": "https://github.com/native-gb/super-mario-land-modern/tree/47d3b0898d549c624e8b28104e729b328c9a798b",
       "features": [
         "Original and enhanced behavior presets",
         "Zoomable widescreen and original-frame layouts",

@@ -38,7 +38,7 @@ async function findGame() {
   const catalog = await response.json();
   const game = catalog.games.find((candidate) => candidate.id === gameId);
   if (!game)
-    throw new Error("SML Modern is missing from the catalog");
+    throw new Error("Super Mario Land is missing from the catalog");
   return game;
 }
 
@@ -62,11 +62,11 @@ async function launch(file) {
   });
   const game = await findGame();
   if (!game.browser.ready || !game.browser.module) {
-    report("ROM VERIFIED. THE SML MODERN BROWSER BUILD IS UNAVAILABLE.", "good");
+    report("ROM VERIFIED. THE SUPER MARIO LAND BROWSER BUILD IS UNAVAILABLE.", "good");
     return;
   }
 
-  report("STARTING SML MODERN…", "good");
+  report("STARTING SUPER MARIO LAND…", "good");
   const runtime = await import(`../../${game.browser.module}`);
   frame.dataset.loading = "true";
   canvas.focus();
@@ -82,7 +82,7 @@ async function launch(file) {
         frame.dataset.running = "false";
         frame.dataset.loading = "false";
         enableAudio.hidden = true;
-        report("SML MODERN STOPPED. SUPPLY THE CARTRIDGE TO START AGAIN.");
+        report("SUPER MARIO LAND STOPPED. SUPPLY THE CARTRIDGE TO START AGAIN.");
       },
     });
     if (globalThis.__NATIVE_GB_TESTING__)

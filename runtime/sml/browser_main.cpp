@@ -190,24 +190,29 @@ bool run_frame(double elapsed_seconds) {
         sml::toggle_tool_layout(debug, controls, sml::ToolLayout::deployed);
     if (window_input.toggle_tester_tools)
         sml::toggle_tool_layout(debug, controls, sml::ToolLayout::tester);
+    if (window_input.toggle_debug_overlays)
+        debug.overlays_visible = !debug.overlays_visible;
     if (window_input.gamepad_changed)
         sml::refresh_controls_navigation(controls);
     sml::sync_controls_navigation(controls);
     if (window_input.quit)
         return false;
 
-    imgui_new_frame();
     if (!sml::sample_host_input(runtime, controls, input))
         return false;
     ++sampled_frames;
     sml::sync_controls_navigation(controls);
-    if (window_input.zoom_steps != 0 && game.rules.view != sml::ViewLayout::original_frame) {
-        const float zoom =
-            game.rules.zoom + static_cast<float>(window_input.zoom_steps) * 0.25F;
+    const bool tools_own_input = debug.visible || controls.visible;
+    if (tools_own_input)
+        sml::clear_buttons(input.game);
+    if (!tools_own_input && window_input.zoom_steps != 0 &&
+        game.rules.view != sml::ViewLayout::original_frame) {
+        const float step = game.rules.view == sml::ViewLayout::free_debug ? 0.25F : 1.0F;
+        const float zoom = game.rules.zoom + static_cast<float>(window_input.zoom_steps) * step;
         if (sml::valid_zoom(zoom))
             game.rules.zoom = zoom;
     }
-    if (game.rules.view == sml::ViewLayout::free_debug &&
+    if (!tools_own_input && game.rules.view == sml::ViewLayout::free_debug &&
         (window_input.pan_x != 0.0F || window_input.pan_y != 0.0F)) {
         sml::pan_camera(game.camera, -window_input.pan_x / game.camera.zoom,
                         -window_input.pan_y / game.camera.zoom,
@@ -254,6 +259,10 @@ bool run_frame(double elapsed_seconds) {
         presentation_accumulator -= std::floor(presentation_accumulator);
     }
 
+    // An ImGui frame must always end in Render. Browser callbacks above the
+    // selected presentation ceiling still sample input and step simulation,
+    // but they must not begin a UI frame that the rate gate then abandons.
+    imgui_new_frame();
     gubsy_update_runtime(runtime, static_cast<float>(frame_clock.elapsed));
     host_frame = gubsy_get_frame(runtime);
     sml::configure_camera(game.camera, game.rules, host_frame.render_width,
@@ -274,6 +283,8 @@ bool run_frame(double elapsed_seconds) {
     (void)sml::draw_debug_ui(debug, controls, game, settings, content, audio, replay,
                              render.layout, output.active_backend);
     sml::draw_controls(controls, runtime, settings, debug);
+    if (debug.overlays_visible)
+        sml::draw_debug_overlays(debug.overlays, game, render.layout);
     frame_clock.render_rate_cap = sml::video::effective_render_rate(
         settings.motion_interpolation, settings.render_rate_limit);
     sml::apply_window_request(host_frame.window, debug.display_request);
@@ -415,6 +426,14 @@ EMSCRIPTEN_KEEPALIVE int native_gb_debug_behavior() {
     return started ? static_cast<int>(settings.rules.behavior) : -1;
 }
 
+EMSCRIPTEN_KEEPALIVE int native_gb_debug_world_policy() {
+    return started ? static_cast<int>(game.rules.world) : -1;
+}
+
+EMSCRIPTEN_KEEPALIVE double native_gb_debug_zoom() {
+    return started ? static_cast<double>(game.rules.zoom) : 0.0;
+}
+
 EMSCRIPTEN_KEEPALIVE int native_gb_debug_phase() {
     return started ? static_cast<int>(game.phase) : -1;
 }
@@ -425,6 +444,10 @@ EMSCRIPTEN_KEEPALIVE int native_gb_debug_browser_managed_vsync() {
 
 EMSCRIPTEN_KEEPALIVE int native_gb_debug_ui_state() {
     return started ? ui_state() : 0;
+}
+
+EMSCRIPTEN_KEEPALIVE int native_gb_debug_overlays_visible() {
+    return started && debug.overlays_visible ? 1 : 0;
 }
 
 EMSCRIPTEN_KEEPALIVE int native_gb_debug_set_presentation(int renderer, int interpolation,

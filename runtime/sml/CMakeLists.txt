@@ -45,6 +45,6 @@ target_link_options(native-gb-sml-browser PRIVATE
     "-sFORCE_FILESYSTEM=1"
     "-sMIN_WEBGL_VERSION=2"
     "-sMAX_WEBGL_VERSION=2"
-    "-sEXPORTED_FUNCTIONS=['_malloc','_free','_native_gb_start','_native_gb_frame','_native_gb_shutdown','_native_gb_audio_resume','_native_gb_debug_sampled_frames','_native_gb_debug_simulation_steps','_native_gb_debug_presented_frames','_native_gb_debug_active_renderer','_native_gb_debug_requested_renderer','_native_gb_debug_interpolation','_native_gb_debug_render_rate','_native_gb_debug_behavior','_native_gb_debug_phase','_native_gb_debug_browser_managed_vsync','_native_gb_debug_ui_state','_native_gb_debug_set_presentation','_native_gb_debug_set_behavior','_native_gb_debug_force_gpu_fallback','_native_gb_last_error']"
+    "-sEXPORTED_FUNCTIONS=['_malloc','_free','_native_gb_start','_native_gb_frame','_native_gb_shutdown','_native_gb_audio_resume','_native_gb_debug_sampled_frames','_native_gb_debug_simulation_steps','_native_gb_debug_presented_frames','_native_gb_debug_active_renderer','_native_gb_debug_requested_renderer','_native_gb_debug_interpolation','_native_gb_debug_render_rate','_native_gb_debug_behavior','_native_gb_debug_world_policy','_native_gb_debug_zoom','_native_gb_debug_phase','_native_gb_debug_browser_managed_vsync','_native_gb_debug_ui_state','_native_gb_debug_overlays_visible','_native_gb_debug_set_presentation','_native_gb_debug_set_behavior','_native_gb_debug_force_gpu_fallback','_native_gb_last_error']"
     "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap','FS','HEAPU8']"
     "-lidbfs.js")

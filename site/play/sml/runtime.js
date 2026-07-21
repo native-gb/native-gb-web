@@ -121,9 +121,12 @@ export async function start({ rom, canvas, gameId, romSha1, onStopped }) {
         interpolation: Boolean(module._native_gb_debug_interpolation()),
         renderRate: module._native_gb_debug_render_rate(),
         behavior: module._native_gb_debug_behavior(),
+        worldPolicy: module._native_gb_debug_world_policy(),
+        zoom: module._native_gb_debug_zoom(),
         phase: module._native_gb_debug_phase(),
         browserManagedVsync: Boolean(module._native_gb_debug_browser_managed_vsync()),
         uiState: module._native_gb_debug_ui_state(),
+        overlaysVisible: Boolean(module._native_gb_debug_overlays_visible()),
       };
     },
     setPresentation(renderer, interpolation, rate) {

@@ -285,6 +285,11 @@ try {
     await page.waitForTimeout(250);
     const box = await page.locator("#runtime-frame").boundingBox();
     assert(Math.abs(box.width / box.height - 16 / 9) < 0.01);
+    const canvasSize = await page.locator("#game-canvas").evaluate((canvas) => ({
+      width: canvas.width,
+      height: canvas.height,
+    }));
+    assert.deepEqual(canvasSize, { width: Math.round(box.width), height: Math.round(box.height) });
     await page.screenshot({ path: `${artifactRoot}/tetris-browser-${name}.png`, fullPage: true });
   }
   assert.deepEqual(pageErrors, []);
