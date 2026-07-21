@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title description">
+  <title id="title">SML Modern abstract card</title>
+  <desc id="description">Original geometric landscape artwork in a four-tone handheld palette.</desc>
+  <rect width="960" height="540" fill="#07100b"/>
+  <path fill="#dff8d0" d="M48 48h864v444H48z"/>
+  <path fill="#88c070" d="M48 350h864v142H48zM132 268l116-116 116 116zm438 26 148-148 148 148z"/>
+  <path fill="#346856" d="M48 404h864v28H48zM92 350h96v54H92zm678-64h82v118h-82z"/>
+  <path fill="#081820" d="M48 432h864v60H48zM76 376h808v12H76z"/>
+  <g fill="#081820" font-family="monospace" font-weight="700" text-anchor="middle">
+    <text x="480" y="116" font-size="48" letter-spacing="16">NATIVE GB</text>
+    <text x="480" y="212" font-size="76" letter-spacing="8">SML // MODERN</text>
+  </g>
+  <g fill="#dff8d0">
+    <rect x="124" y="448" width="24" height="24"/>
+    <rect x="172" y="448" width="24" height="24"/>
+    <rect x="220" y="448" width="24" height="24"/>
+  </g>
+</svg>

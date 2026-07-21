@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b1510">
+  <meta name="description" content="Native Game Boy reimplementations powered by cartridges you supply.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'">
+  <title>Native GB</title>
+  <link rel="icon" href="assets/native-gb-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Native GB home">
+      <img src="assets/native-gb-mark.svg" width="42" height="42" alt="">
+      <span><strong>NATIVE GB</strong><small>CARTRIDGE-POWERED PC PORTS</small></span>
+    </a>
+    <div class="site-status"><i aria-hidden="true"></i><span>1 GAME</span></div>
+  </header>
+
+  <main class="catalog-shell">
+    <section class="game-index" aria-labelledby="game-index-title">
+      <header>
+        <p>SELECT GAME</p>
+        <h1 id="game-index-title">LIBRARY</h1>
+      </header>
+      <div id="game-list" class="game-list" role="listbox" aria-label="Native GB games"></div>
+      <footer>
+        <span>ROM data stays on this machine.</span>
+        <a href="https://github.com/native-gb" rel="noopener noreferrer">SOURCE ↗</a>
+      </footer>
+    </section>
+
+    <article id="game-detail" class="game-detail" aria-live="polite">
+      <div class="loading-panel">READING CATALOG…</div>
+    </article>
+  </main>
+
+  <template id="game-row-template">
+    <button class="game-row" type="button" role="option" aria-selected="false">
+      <span class="game-row__number"></span>
+      <span class="game-row__text"><strong></strong><small></small></span>
+      <span class="game-row__arrow" aria-hidden="true">›</span>
+    </button>
+  </template>
+
+  <script src="catalog.js" type="module"></script>
+</body>
+</html>

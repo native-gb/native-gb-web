@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <title>Native falling-block composition</title>
+  <rect width="1280" height="720" fill="#07100b"/>
+  <g stroke="#1b3021" stroke-width="2" opacity=".75">
+    <path d="M0 80h1280M0 160h1280M0 240h1280M0 320h1280M0 400h1280M0 480h1280M0 560h1280M0 640h1280"/>
+    <path d="M80 0v720M160 0v720M240 0v720M320 0v720M400 0v720M480 0v720M560 0v720M640 0v720M720 0v720M800 0v720M880 0v720M960 0v720M1040 0v720M1120 0v720M1200 0v720"/>
+  </g>
+  <g transform="translate(420 88)" shape-rendering="crispEdges">
+    <rect x="0" y="0" width="440" height="544" fill="#d7e7c5" stroke="#8fae72" stroke-width="16"/>
+    <rect x="32" y="32" width="376" height="480" fill="#c3d9ad"/>
+    <g fill="#385b38" stroke="#102d1b" stroke-width="8">
+      <path d="M80 376h64v64H80zM144 376h64v64h-64zM208 376h64v64h-64zM272 376h64v64h-64z"/>
+      <path d="M80 440h64v64H80zM144 440h64v64h-64zM272 440h64v64h-64zM336 440h64v64h-64z"/>
+      <path d="M208 312h64v64h-64zM272 312h64v64h-64zM272 248h64v64h-64zM336 248h64v64h-64z"/>
+    </g>
+    <g fill="#8fae72" stroke="#385b38" stroke-width="8">
+      <path d="M80 168h64v64H80zM144 168h64v64h-64zM208 168h64v64h-64zM144 104h64v64h-64z"/>
+    </g>
+  </g>
+  <g fill="#b8d95f" shape-rendering="crispEdges">
+    <rect x="88" y="104" width="16" height="16"/><rect x="1128" y="144" width="8" height="8"/>
+    <rect x="208" y="568" width="8" height="8"/><rect x="1064" y="536" width="16" height="16"/>
+  </g>
+</svg>

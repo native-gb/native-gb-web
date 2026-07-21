@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "games": [
+    {
+      "id": "tetris",
+      "title": "Tetris",
+      "system": "Game Boy",
+      "revision": "World revision 1.1",
+      "description": "A native C++ reconstruction with the original modes, local two-player, cartridge-derived presentation, controller support, and optional modern rules and effects.",
+      "image": "assets/tetris-card.svg",
+      "play_url": "play/tetris/",
+      "source_url": "https://github.com/native-gb/tetris-modern/tree/f302337d211fd736851e0d69ab0180a9ae7b4c33",
+      "features": [
+        "Original, enhanced, and modern presets",
+        "Integer-perfect widescreen presentation",
+        "Local scores, settings, and controller bindings"
+      ],
+      "roms": [
+        {
+          "label": "Tetris revision 1.1",
+          "sha1": "74591cc9501af93873f9a5d3eb12da12c0723bbc",
+          "size": 32768
+        }
+      ],
+      "browser": {
+        "ready": true,
+        "status": "Playable in browser",
+        "module": "play/tetris/runtime.js"
+      }
+    },
+    {
+      "id": "sml-modern",
+      "title": "Super Mario Land Modern",
+      "system": "Game Boy",
+      "revision": "World revision A",
+      "description": "A clean native C++ implementation with cartridge-decoded presentation, widescreen world views, persistent expanded encounters, modern camera options, controller support, and developer tools.",
+      "image": "assets/sml-modern-card.svg",
+      "play_url": "play/sml/",
+      "source_url": "https://github.com/native-gb/super-mario-land-modern/tree/d94d5e7f836ec4037e820fd9b5df88f8b5d52813",
+      "features": [
+        "Original and enhanced behavior presets",
+        "Zoomable widescreen and original-frame layouts",
+        "GPU atlas rendering, interpolation, and local settings"
+      ],
+      "roms": [
+        {
+          "label": "Super Mario Land revision A",
+          "sha1": "418203621b887caa090215d97e3f509b79affd3e",
+          "size": 65536
+        }
+      ],
+      "browser": {
+        "ready": true,
+        "status": "Playable in browser",
+        "module": "play/sml/runtime.js"
+      }
+    }
+  ]
+}

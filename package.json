@@ -1,0 +1,12 @@
+{
+  "name": "native-gb-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:browser": "node tests/browser-smoke.js",
+    "test:browser:sml": "node tests/sml-browser-smoke.js"
+  },
+  "devDependencies": {
+    "playwright-core": "1.55.0"
+  }
+}
