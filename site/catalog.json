@@ -36,7 +36,7 @@
       "description": "A clean native C++ implementation with cartridge-decoded presentation, widescreen world views, persistent expanded encounters, modern camera options, controller support, and developer tools.",
       "image": "assets/sml-modern-card.svg",
       "play_url": "play/sml/",
-      "source_url": "https://github.com/native-gb/super-mario-land-modern/tree/47d3b0898d549c624e8b28104e729b328c9a798b",
+      "source_url": "https://github.com/native-gb/super-mario-land-modern/tree/c4e0a679f13f0052a974b4710fc0e6df61364ccf",
       "features": [
         "Original and enhanced behavior presets",
         "Zoomable widescreen and original-frame layouts",
